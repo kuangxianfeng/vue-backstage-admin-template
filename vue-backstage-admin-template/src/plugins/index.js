@@ -8,7 +8,11 @@ import './element';
 import '@/permission'; //引入权限控制的js
 
 import api from '@/api/api'; //接口集合
+Vue.prototype.$api = api;
 
 import 'default-passive-events';
 
-Vue.prototype.$api = api;
+import '@/css/reset.css';//重置pc端样式
+
+require('./mock')
+

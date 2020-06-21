@@ -1,0 +1,12 @@
+.app-content{
+    position: relative;
+    min-height: 100%;
+    background: #f6f8f9;
+    transition: all 0.3s;   
+}
+.sidebarCollapse{
+    margin-left: 65px;
+}
+.sidebarNoCollapse{
+    margin-left: 220px;
+}

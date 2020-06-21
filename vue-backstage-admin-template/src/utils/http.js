@@ -37,16 +37,8 @@ axios.interceptors.request.use(function (config) {
 
 // 添加响应拦截器
 axios.interceptors.response.use(function (response) {
-  let data =JSON.parse(decryptDes(response.data.ciphertext));
-  if(data.errorCode!==0){
-    Message.error(data.message)
-    if(data.errorCode===1003){
-      toLogin();
-    }
-  }
-  // 对响应数据做点什么
-  console.log(data)
-  return data;
+  
+  return response;
 }, function (error) {
   // 对响应错误做点什么
   Message.error('服务器异常 请稍后再试')
