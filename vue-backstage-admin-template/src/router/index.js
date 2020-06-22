@@ -5,6 +5,12 @@ Vue.use(VueRouter)
 
 const defaultRoutes = [
   {
+    path: "/redirect",
+    name: "Redirect",
+    component: () => import('@/views/Redirect/Index.vue'),
+    hidden: true
+  },
+  {
     path: '/login',
     name: 'Login',
     component: () => import('@/views/Login/Index.vue'),

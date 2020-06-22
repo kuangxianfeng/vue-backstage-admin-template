@@ -7,11 +7,11 @@ import store from '@/store';//vuex
 import Nprogress from "nprogress";//加载进度条 - Nprogress.start(); Nprogress.done();
 import "nprogress/nprogress.css";
 
-
 // 进入路由之前进行拦截
 router.beforeEach(async (to, from, next) => {
     Nprogress.start();//进度条开始
     document.title = to.meta.title;//设置页面title
+
     if (to.path === '/login') {
         next();
     } else {
@@ -19,6 +19,10 @@ router.beforeEach(async (to, from, next) => {
         if (token) {
             if (meauBarData.length !== 0) {
                 next();
+                let routerBreadcrumb=to.matched.filter((item)=>{
+                    return item.meta.title!=='主页'
+                })
+                store.commit('setBreadcrumbRecordArr',routerBreadcrumb);
             } else {
                 let Main = {
                     path: '/',

@@ -8,5 +8,8 @@ export default {
     },
     setMeauBarData(store, data) {
         store.meauBarData = data;
+    },
+    setBreadcrumbRecordArr(store,data){
+        store.breadcrumbRecordArr=data;
     }
 }
