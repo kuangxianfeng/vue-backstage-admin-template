@@ -4,8 +4,6 @@
 import axios from 'axios'
 import router from '../router/index';
 import { Message } from 'element-ui';
-// des解密
-
 /** 
  * 跳转登录页
  * 携带当前页面路由，以期在登录页面完成登录后返回当前页面
@@ -25,9 +23,9 @@ axios.defaults.timeout = 10000;
 
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
-
+axios.defaults.headers.common["token"] = localStorage.getItem("token");
 // 添加请求拦截器
-axios.interceptors.request.use(function (config) {
+axios.interceptors.request.use((config) => {
   // 在发送请求之前做些什么
   return config;
 }, function (error) {
@@ -36,8 +34,10 @@ axios.interceptors.request.use(function (config) {
 });
 
 // 添加响应拦截器
-axios.interceptors.response.use(function (response) {
-  
+axios.interceptors.response.use((response) => {
+  if (response.data.code !== 200) {
+    Message.error(response.data.msg)
+  }
   return response;
 }, function (error) {
   // 对响应错误做点什么

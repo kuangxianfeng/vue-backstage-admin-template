@@ -1,8 +1,11 @@
 import {
-   httpPost
+    httpPost
 } from '@/utils/http';
 export default {
-    menuBarData(){
-        return httpPost('/meau/bar/data')
+    menuBarData(params) {
+        return httpPost('/meau/bar/data', params)
+    },
+    login(params) {
+        return httpPost("/login", params)
     }
 }

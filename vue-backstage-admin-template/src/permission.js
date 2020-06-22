@@ -12,8 +12,41 @@ import "nprogress/nprogress.css";
 router.beforeEach(async (to, from, next) => {
     Nprogress.start();//进度条开始
     document.title = to.meta.title;//设置页面title
-    
-    next();
+    if (to.path === '/login') {
+        next();
+    } else {
+        const { token, meauBarData } = store.state;
+        if (token) {
+            if (meauBarData.length !== 0) {
+                next();
+            } else {
+                let Main = {
+                    path: '/',
+                    name: 'Main',
+                    component: () => import('@/views/Main/Index.vue'),
+                    meta: {
+                        title: '主页'
+                    },
+                    children: []
+                };
+                let res = await store.dispatch('getPermission');
+                Main.children = res;
+                let endRoute = [Main, {
+                    path: '*',
+                    redirect: '/404'
+                }];
+                router.addRoutes(endRoute);
+                next({
+                    ...to,
+                    replace: true
+                })
+            }
+        } else {
+            next({
+                path: '/login'
+            })
+        }
+    }
 })
 router.afterEach((to, from, next) => {
     Nprogress.done();//进度条开始

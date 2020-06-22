@@ -14,39 +14,37 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState } from "vuex";
 import MenuList from "./MenuList.vue";
 export default {
-    name:'Sidebar',
-    components:{
-        MenuList,
-    },
-    computed:{
-        ...mapState(['sidebarIsCollapse','meauBarData'])
-    },
-    created(){
-        this.$api.menuBarData().then(res=>{
-            console.log(res);
-        })
-    }
-}
+  name: "Sidebar",
+  components: {
+    MenuList
+  },
+  computed: {
+    ...mapState(["sidebarIsCollapse", "meauBarData"])
+  }
+};
 </script>
 
 <style lang="scss" scoped>
-.sidebar{
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 2;
-    width: 220px;
-    height: 100vh;
-    overflow: hidden;
-    box-shadow: 2px 0 6px rgba(0, 21, 41, 0.35);
-    transition: all 0.3s;
-    background: #545c64;
+.sidebar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  width: 220px;
+  height: 100vh;
+  overflow: hidden;
+  box-shadow: 2px 0 6px rgba(0, 21, 41, 0.35);
+  transition: all 0.3s;
+  background: #545c64;
+  ::v-deep.el-menu {
+    border-right: none;
+  }
 }
-.w65{
-    width: 65px;
+.w65 {
+  width: 65px;
 }
 </style>

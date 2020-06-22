@@ -1,5 +1,12 @@
-export default{
-    setSidebarIsCollapse(store,data){
-        store.sidebarIsCollapse=data;
+export default {
+    setSidebarIsCollapse(store, data) {
+        store.sidebarIsCollapse = data;
+    },
+    setToken(store, data) {
+        store.token = data;
+        localStorage.setItem('token', data)
+    },
+    setMeauBarData(store, data) {
+        store.meauBarData = data;
     }
 }

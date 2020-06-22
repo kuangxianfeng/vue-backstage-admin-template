@@ -3,21 +3,13 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
 
-const defaultRoutes=[
+const defaultRoutes = [
   {
-    path:'/',
-    name:'Main',
-    component:()=>import('@/views/Main/Index.vue'),
-    meta:{
-      title:'主页'
-    }
-  },
-  {
-    path:'/login',
-    name:'Login',
-    component:()=>import('@/views/Login/Index.vue'),
-    meta:{
-      title:'登陆'
+    path: '/login',
+    name: 'Login',
+    component: () => import('@/views/Login/Index.vue'),
+    meta: {
+      title: '登陆'
     }
   }
 ]
