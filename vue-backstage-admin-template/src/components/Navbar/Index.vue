@@ -2,8 +2,8 @@
     <div class="navbar">
         <div class="handle-box-1 hDiv">
             <div class="sidebar-handle hDiv">
-                <i class="el-icon-s-fold sidebar-handle-icon" v-if="!sidebarIsCollapse" @click="sidebar_handle" title="收起菜单"></i>
-                <i class="el-icon-s-unfold sidebar-handle-icon" v-else @click="sidebar_handle" title="展开菜单"></i>
+                <i class="el-icon-s-fold sidebar-handle-icon" v-if="!sidebarIsCollapse" @click="sidebarHandle" title="收起菜单"></i>
+                <i class="el-icon-s-unfold sidebar-handle-icon" v-else @click="sidebarHandle" title="展开菜单"></i>
             </div>
             <el-breadcrumb separator-class="el-icon-arrow-right">
                 <el-breadcrumb-item v-for="(item,idx) in breadcrumbRecordArr" :key="idx">{{item.meta.title}}</el-breadcrumb-item>
@@ -39,8 +39,15 @@ export default {
             isEnlarge:false,
         }
     },
+    mounted(){
+        window.onresize=()=>{
+            if(!this.checkFullScreenEvent()){
+                this.exitFullScreenEvent();
+            }
+        }
+    },
     methods:{
-        sidebar_handle(){
+        sidebarHandle(){
             if(this.sidebarIsCollapse){
                 this.$store.commit('setSidebarIsCollapse',false);
             }else{
@@ -50,28 +57,43 @@ export default {
         fullScreenHandle(flag){
             const app=document.querySelector('#app');
             if(flag==='yes'){
-                if (app.requestFullscreen) {
-                    app.requestFullscreen();
-                } else if (app.mozRequestFullScreen) {
-                    app.mozRequestFullScreen();
-                } else if (app.webkitRequestFullscreen) {
-                    app.webkitRequestFullscreen();
-                } else if (app.msRequestFullscreen) {
-                    app.msRequestFullscreen();
-                }
-                this.isEnlarge=true;
+                this.fullScreenEvent(app);
             }else{
-                if(document.exitFullScreen) {
-                    document.exitFullScreen();
-                } else if(document.mozCancelFullScreen) {
-                    document.mozCancelFullScreen();
-                } else if(document.webkitExitFullscreen) {
-                    document.webkitExitFullscreen();
-                } else if(element.msExitFullscreen) {
-                    element.msExitFullscreen();
-                }
-                this.isEnlarge=false;
+                this.exitFullScreenEvent(app);
             }
+        },
+        fullScreenEvent(app){
+            if (app.requestFullscreen) {
+                app.requestFullscreen();
+            } else if (app.mozRequestFullScreen) {
+                app.mozRequestFullScreen();
+            } else if (app.webkitRequestFullscreen) {
+                app.webkitRequestFullscreen();
+            } else if (app.msRequestFullscreen) {
+                app.msRequestFullscreen();
+            }
+            this.isEnlarge=true;
+        },
+        exitFullScreenEvent(app){
+            if(document.exitFullScreen) {
+                document.exitFullScreen();
+            } else if(document.mozCancelFullScreen) {
+                document.mozCancelFullScreen();
+            } else if(document.webkitExitFullscreen) {
+                document.webkitExitFullscreen();
+            } else if(element.msExitFullscreen) {
+                element.msExitFullscreen();
+            }
+            this.isEnlarge=false;
+        },
+        checkFullScreenEvent(){
+            return  !! (
+                document.fullscreen || 
+                document.mozFullScreen ||                         
+                document.webkitIsFullScreen ||       
+                document.webkitFullScreen || 
+                document.msFullScreen 
+            );
         },
         paletteHandle(){
 
@@ -94,6 +116,7 @@ export default {
 .navbar{
     width: 100%;
     background: #fff;
+    box-shadow: 0px 1px 2px rgba(0, 21, 41, 0.35);
     .handle-box-1{
         padding: 10px 5px;
         ::v-deep.el-breadcrumb{
